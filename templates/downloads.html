@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloaded Images</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #4CAF50;
+            font-size: 2.5em;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 30px;
+            color: #333;
+            font-size: 1.8em;
+        }
+
+        div img {
+            width: 200px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        div img:hover {
+            transform: scale(1.05);
+        }
+
+        div {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        form {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 30px;
+            color: #4CAF50;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            form {
+                width: 100%;
+            }
+
+            div img {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Downloaded Images for "{{ query }}"</h1>
+
+    <div>
+        <!-- Loop through the downloaded images and display them -->
+        {% for image in images %}
+        <div>
+            <img src="{{ url_for('static', filename=image) }}" alt="Image">
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2>Send Images via Email</h2>
+    <form method="POST" action="{{ url_for('send_email') }}">
+        <input type="hidden" name="query" value="{{ query }}">
+        <label for="email">Enter your email:</label>
+        <input type="email" name="email" placeholder="your.email@example.com" required>
+        <button type="submit">Send Email</button>
+    </form>
+
+    <a href="/">Search Again</a>
+
+</body>
+</html>
